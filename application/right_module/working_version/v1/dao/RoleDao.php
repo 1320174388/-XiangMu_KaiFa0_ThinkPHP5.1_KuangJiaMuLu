@@ -287,5 +287,111 @@ class RoleDao implements RoleInterface
         return $roleNewArr;
     }
 
+    /**
+     * 名  称 : roleUpdate()
+     * 功  能 : 修改职位信息数据处理
+     * 变  量 : --------------------------------------
+     * 输  入 : $put['role_id']     => '职位ID';
+     * 输  入 : $put['admin_token'] => '管理标识';
+     * 输  入 : $put['role_name']   => '职位名称';
+     * 输  入 : $put['role_class']  => '职位分组';
+     * 输  入 : $put['right_str']   => '权限ID字符串';
+     * 输  出 : ['msg'=>'success','data'=>'提示信息']
+     * 创  建 : 2018/09/21 10:13
+     */
+    public function roleUpdate($put)
+    {
+        // TODO : 获取数据
+        $data = RoleModel::where(
+            'role_name',$put['role_name']
+        )->where(
+            'role_class',$put['role_class']
+        )->find();
+        // TODO : 判断数据
+        if(($data)&&($data['role_id']!=$put['role_id'])){
+            return \RSD::wxReponse(false,'M','','角色已存在');
+        }
+        // 获取管理员名称
+        $userName = ''; $this->getAdminName($put,$userName);
+        // 启动事务
+        \think\Db::startTrans();
+        try {
+            // 获取权限数据
+            $put['right_array'] = explode(',',$put['right_str']);
+            // TODO : 实例化 RoleModel 模型
+            $role = RoleModel::get($put['role_id']);
+            if(!$role){
+                return \RSD::wxReponse(false,'M','','职位不存在');
+            }
+            // TODO : 处理数据
+            $role->role_name  = $put['role_name'];
+            $role->role_class = $put['role_class'];
+            $role->role_insert= $userName;
+            $role->role_right = json_encode($put['right_array'],320);
+            $role->role_time  = time();
+            // TODO : 写入数据
+            $role->save();
+            // 处理数据
+            $rightArray = [];
+            foreach($put['right_array'] as $k => $v){
+                if(is_numeric($v)){
+                    $rightArray[] = [
+                        'role_id'  => $put['role_id'], 'right_id' => $v
+                    ];
+                }
+            }
+            RoleRight::where(
+                'role_id',$put['role_id']
+            )->delete();
+            // 写入权限
+            $roleRight = new RoleRight();
+            $roleRight->saveAll($rightArray);
+            // 提交事务
+            \think\Db::commit();
+            return returnData('success','修改成功');
+        } catch (\Exception $e) {
+            // 回滚事务
+            \think\Db::rollback();
+            return returnData('error','修改失败');
+        }
+    }
+
+    /**
+     * 名  称 : roleDelete()
+     * 功  能 : 删除职位信息数据处理
+     * 变  量 : --------------------------------------
+     * 输  入 : $delete['role_id']     => '职位ID';
+     * 输  入 : $delete['role_class']  => '职位分组';
+     * 输  出 : ['msg'=>'success','data'=>'提示信息']
+     * 创  建 : 2018/09/21 15:17
+     */
+    public function roleDelete($delete)
+    {
+        // TODO : 获取数据
+        $data = RoleModel::where(
+            'role_id',$delete['role_id']
+        )->where(
+            'role_class',$delete['role_class']
+        )->find();
+        // TODO : 判断数据
+        if(!$data){
+            return \RSD::wxReponse(false,'M','','要删除职位不存在');
+        }
+        // 启动事务
+        \think\Db::startTrans();
+        try {
+            $data->delete();
+            RoleRight::where(
+                'role_id',$delete['role_id']
+            )->delete();
+            // 提交事务
+            \think\Db::commit();
+            return returnData('success','删除成功');
+        } catch (\Exception $e) {
+            // 回滚事务
+            \think\Db::rollback();
+            return returnData('error','删除失败');
+        }
+    }
 
 }

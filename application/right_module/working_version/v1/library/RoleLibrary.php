@@ -45,4 +45,40 @@ class RoleLibrary
         return ['msg'=>'success','data'=>'返回数据'];
     }
 
+    /**
+     * 名  称 : roleLibPut()
+     * 功  能 : 修改职位信息函数类
+     * 变  量 : --------------------------------------
+     * 输  入 : $put['admin_token'] => '管理标识';
+     * 输  入 : $put['role_name']   => '职位名称';
+     * 输  入 : $put['role_class']  => '职位分组';
+     * 输  入 : $put['right_str']   => '权限ID字符串';
+     * 输  出 : ['msg'=>'success','data'=>'提示信息']
+     * 创  建 : 2018/09/21 10:13
+     */
+    public function roleLibPut($put)
+    {
+        // TODO : 执行函数处理逻辑
+
+        // TODO : 返回函数输出数据
+        return ['msg'=>'success','data'=>'返回数据'];
+    }
+
+    /**
+     * 名  称 : roleLibDelete()
+     * 功  能 : 删除职位信息函数类
+     * 变  量 : --------------------------------------
+     * 输  入 : $delete['admin_token'] => '管理标识';
+     * 输  入 : $delete['role_class']  => '职位分组';
+     * 输  出 : ['msg'=>'success','data'=>'提示信息']
+     * 创  建 : 2018/09/21 15:17
+     */
+    public function roleLibDelete($delete)
+    {
+        // TODO : 执行函数处理逻辑
+
+        // TODO : 返回函数输出数据
+        return ['msg'=>'success','data'=>'返回数据'];
+    }
+
 }

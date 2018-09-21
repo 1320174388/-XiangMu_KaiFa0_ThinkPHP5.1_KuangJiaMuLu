@@ -33,4 +33,29 @@ interface RoleInterface
      * 创  建 : 2018/09/20 16:14
      */
     public function roleSelect($get);
+
+    /**
+     * 名  称 : roleUpdate()
+     * 功  能 : 声明:修改职位信息数据处理
+     * 变  量 : --------------------------------------
+     * 输  入 : $put['role_id']     => '职位ID';
+     * 输  入 : $put['admin_token'] => '管理标识';
+     * 输  入 : $put['role_name']   => '职位名称';
+     * 输  入 : $put['role_class']  => '职位分组';
+     * 输  入 : $put['right_str']   => '权限ID字符串';
+     * 输  出 : ['msg'=>'success','data'=>'提示信息']
+     * 创  建 : 2018/09/21 10:13
+     */
+    public function roleUpdate($put);
+
+    /**
+     * 名  称 : roleDelete()
+     * 功  能 : 声明:删除职位信息数据处理
+     * 变  量 : --------------------------------------
+     * 输  入 : $delete['role_id']     => '职位ID';
+     * 输  入 : $delete['role_class']  => '职位分组';
+     * 输  出 : ['msg'=>'success','data'=>'提示信息']
+     * 创  建 : 2018/09/21 15:17
+     */
+    public function roleDelete($delete);
 }

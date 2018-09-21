@@ -28,6 +28,24 @@ Route::get(
     'right_module/:v.controller.RoleController/roleGet'
 )->middleware('Right_v1_IsAdmin');
 
+/**
+ * 传值方式 : PUT
+ * 路由功能 : 修改职位信息
+ */
+Route::put(
+    ':v/right_module/role_route',
+    'right_module/:v.controller.RoleController/rolePut'
+)->middleware('Right_v1_IsAdmin');
+
+/**
+ * 传值方式 : DELETE
+ * 路由功能 : 删除职位信息
+ */
+Route::delete(
+    ':v/right_module/role_route',
+    'right_module/:v.controller.RoleController/roleDelete'
+)->middleware('Right_v1_IsAdmin');
+
 // ----- 权限管理路由 -----
 
 /**
