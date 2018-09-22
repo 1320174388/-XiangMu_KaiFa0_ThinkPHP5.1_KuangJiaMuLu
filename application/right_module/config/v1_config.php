@@ -9,6 +9,12 @@
  */
 
 return [
-    // 配置信息注释
-    '配置信息下标' => '配置信息内容'
+    // TODO：小程序 wx_AppID
+    'wx_AppID'     => 'wxccc5a444059f1b68',
+    // TODO：小程序 wx_AppSecret
+    'wx_AppSecret' => '7aa53c9ab6fdb80536b2909c44e280e3',
+    // TODO：管理员审核信息模板消息ID
+    'Wx_Code_ShenHe' => 'tVJ-UpoTQGgBqFTrCbSOVChbBVBN7czSufliECCtPiw',
+    // TODO：管理员审核回调路由
+    'Wx_Code_Url'    => '/page/index/index',
 ];

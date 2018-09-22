@@ -137,7 +137,7 @@ class RoleDao implements RoleInterface
         // TODO :  获取职位信息
         $res = $this->roleAdminListGet($get);
         return \RSD::wxReponse(
-            $res,'M',$res,'您没有权限'
+            $res,'M',$res,'没有下级职位'
         );
     }
 
@@ -271,14 +271,17 @@ class RoleDao implements RoleInterface
 
         // 新数据
         $roleNewArr = [];
+        $resArrNum = count($role);
         foreach($role as $v){
             $types = true;
+            $arrNum = 0;
             foreach(json_decode($v['role_right'],true) as $j){
                 if(!in_array($j,$role_array)){
                     $types = false;
                 }
+                $arrNum++;
             }
-            if($types){
+            if(($types)&&($arrNum<$resArrNum)){
                 $roleNewArr[] = $v;
             }
         }
