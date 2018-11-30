@@ -357,9 +357,14 @@ class RSD extends ExceptionCodeConfig
                     $msg  = $codeArr[1];
                 }
             }
+
             // 判断错误码是否存在
-            if((constant('self::'. $code))&&(empty($msg))) {
-                $msg = constant('self::'. $code);
+            try{
+                if((constant('self::'. $code))&&(empty($msg))) {
+                    $msg = constant('self::'. $code);
+                }
+            }catch (\Exception $e){
+                die($e->getMessage().", Error codes need to be defined.");
             }
         }
     }
@@ -383,6 +388,8 @@ class ExceptionCodeConfig
     const E10002 = 'Parameter Formatting Error.';
     // TODO : E10003 -> 某个参数值类型错误
     const E10003 = 'Parameter Error In Type.';
+    // TODO : E10004 -> 某个秘钥与预定义值不一样
+    const E10004 = 'Parameter secret key error';
     // TODO : E20000 -> 权限不足
     const E20000 = 'No Authority.';
     // TODO : E30100 -> 图片大小超过限制
